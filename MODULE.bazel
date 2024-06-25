@@ -20,6 +20,35 @@ module(
     compatibility_level = 1,
 )
 
+RULES_NIXKPGS_REVISION = "ecd3028f3a586a5bdd3eeb73d3d621dc822a10a7"
+RULES_NIXKPGS_INTEGRITY = "sha256-fSksumNFG+GXZrnUgIhs4n70Sp1sKwCG69JISN8G25E="
+
+bazel_dep(name = "rules_nixpkgs_core")
+archive_override(
+    module_name = "rules_nixpkgs_core",
+    urls = ["https://github.com/tweag/rules_nixpkgs/archive/{}.tar.gz".format(RULES_NIXKPGS_REVISION)],
+    integrity = RULES_NIXKPGS_INTEGRITY,
+    strip_prefix = "rules_nixpkgs-{}/core".format(RULES_NIXKPGS_REVISION),
+)
+
+nix_repo = use_extension("@rules_nixpkgs_core//extensions:repository.bzl", "nix_repo")
+nix_repo.file(
+    name = "nixpkgs",
+    file = "//:nixpkgs.nix",
+    file_deps = ["//:flake.lock"],
+)
+use_repo(nix_repo, "nixpkgs")
+
+bazel_dep(name = "rules_nixpkgs_cc")
+archive_override(
+    module_name = "rules_nixpkgs_cc",
+    urls = ["https://github.com/tweag/rules_nixpkgs/archive/{}.tar.gz".format(RULES_NIXKPGS_REVISION)],
+    integrity = RULES_NIXKPGS_INTEGRITY,
+    strip_prefix = "rules_nixpkgs-{}/toolchains/cc".format(RULES_NIXKPGS_REVISION),
+)
+
+bazel_dep(name = "rules_cc", version = "0.0.4")
+
 cc_configure = use_extension("@bazel_tools//tools/cpp:cc_configure.bzl", "cc_configure_extension")
 use_repo(cc_configure, "local_config_cc")
 

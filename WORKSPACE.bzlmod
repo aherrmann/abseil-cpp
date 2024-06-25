@@ -17,3 +17,12 @@
 # This file is intentionally empty. When bzlmod is enabled and this
 # file exists, the contents of WORKSPACE is ignored. This prevents
 # bzlmod builds from unintentionally depending on the WORKSPACE file.
+
+load("@rules_nixpkgs_cc//:cc.bzl", "nixpkgs_cc_configure")
+
+# TODO Use module extension once available.
+nixpkgs_cc_configure(
+    name = "nixpkgs_config_cc",
+    repository = "@nixpkgs",
+    cc_std = "c++14",
+)
