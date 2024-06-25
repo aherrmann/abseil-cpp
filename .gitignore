@@ -16,3 +16,4 @@ CMakeLists.txt.user
 *.pyc
 copts/__pycache__/
 .direnv
+.bazelrc.user
