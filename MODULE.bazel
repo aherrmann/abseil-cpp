@@ -49,6 +49,16 @@ archive_override(
 
 bazel_dep(name = "rules_cc", version = "0.0.4")
 
+bazel_dep(name = "rules_nixpkgs_java")
+archive_override(
+    module_name = "rules_nixpkgs_java",
+    urls = ["https://github.com/tweag/rules_nixpkgs/archive/{}.tar.gz".format(RULES_NIXKPGS_REVISION)],
+    integrity = RULES_NIXKPGS_INTEGRITY,
+    strip_prefix = "rules_nixpkgs-{}/toolchains/java".format(RULES_NIXKPGS_REVISION),
+)
+
+bazel_dep(name = "rules_java", version = "7.4.0")
+
 cc_configure = use_extension("@bazel_tools//tools/cpp:cc_configure.bzl", "cc_configure_extension")
 use_repo(cc_configure, "local_config_cc")
 
