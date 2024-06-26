@@ -19,19 +19,10 @@
 # bzlmod builds from unintentionally depending on the WORKSPACE file.
 
 load("@rules_nixpkgs_cc//:cc.bzl", "nixpkgs_cc_configure")
-load("@rules_nixpkgs_java//:java.bzl", "nixpkgs_java_configure")
 
 # TODO Use module extension once available.
 nixpkgs_cc_configure(
     name = "nixpkgs_config_cc",
     repository = "@nixpkgs",
     cc_std = "c++14",
-)
-
-nixpkgs_java_configure(
-    name = "nixpkgs_java_runtime",
-    attribute_path = "jdk17.home",
-    repository = "@nixpkgs",
-    toolchain_name = "nixpkgs_java",
-    toolchain_version = "17",
 )
