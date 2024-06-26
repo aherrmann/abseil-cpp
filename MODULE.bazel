@@ -39,6 +39,10 @@ nix_repo.file(
 )
 use_repo(nix_repo, "nixpkgs")
 
+nix_pkg = use_extension("@rules_nixpkgs_core//extensions:package.bzl", "nix_pkg")
+nix_pkg.attr(attr = "bazel_7")
+use_repo(nix_pkg, "bazel_7")
+
 bazel_dep(name = "rules_nixpkgs_cc")
 archive_override(
     module_name = "rules_nixpkgs_cc",
